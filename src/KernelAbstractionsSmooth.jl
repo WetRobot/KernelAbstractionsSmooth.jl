@@ -13,7 +13,7 @@ module KernelAbstractionsSmooth
         return(out)
     end
 
-    function default_ulp_callback(eval_x_i::Real, fit_x_j::Real, theta::Real)
+    function default_ulp_callback(fit_x_j::Real, eval_x_i::Real, theta::Real)
         out = (eval_x_i - fit_x_j)^2
         out /= theta
         out *= -1
@@ -21,10 +21,10 @@ module KernelAbstractionsSmooth
     end
 
     ka.@kernel function smoothing_kernel!(    
-        eval_x::AbstractVector, 
-        eval_y_hat::AbstractVector, 
         fit_x::AbstractVector, 
         fit_y::AbstractVector, 
+        eval_x::AbstractVector, 
+        eval_y_hat::AbstractVector, 
         theta::Real,
         ulp_callback::Function
     )
@@ -40,10 +40,10 @@ module KernelAbstractionsSmooth
     end
 
     function smooth!(  
-        eval_x::AbstractVector, 
-        eval_y_hat::AbstractVector, 
         fit_x::AbstractVector, 
         fit_y::AbstractVector, 
+        eval_x::AbstractVector, 
+        eval_y_hat::AbstractVector, 
         theta::AbstractFloat,
         ulp_callback::Function,
         ka_n_work_groups::Int = 1
@@ -52,10 +52,10 @@ module KernelAbstractionsSmooth
         ka_n_work_items_per_group = length(eval_y_hat) ÷ ka_n_work_groups
         kernel! = smoothing_kernel!(ka_device, ka_n_work_items_per_group)
         event = kernel!(
-            eval_x, 
-            eval_y_hat, 
             fit_x, 
             fit_y, 
+            eval_x, 
+            eval_y_hat, 
             theta,
             ulp_callback,
             ndrange = length(eval_y_hat)
