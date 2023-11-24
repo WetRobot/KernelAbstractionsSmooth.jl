@@ -52,8 +52,9 @@ module KernelAbstractionsSmooth
         J::Integer,
         get_fit_y_j::Function,
         eval_y_hat::AbstractVector, 
-        theta::Real,
-        n_jobs::Int
+        theta::Real
+        ;
+        n_jobs::Int = 1
     )::Nothing
         ka_backend = ka.get_backend(eval_y_hat)
         ka_n_elems_per_job = length(eval_y_hat) ÷ n_jobs
@@ -79,8 +80,9 @@ module KernelAbstractionsSmooth
         fit_y::AbstractVector, 
         eval_x::AbstractVector, 
         eval_y_hat::AbstractVector, 
-        theta::Real,
-        n_jobs::Int
+        theta::Real
+        ;
+        n_jobs::Int = 1
     )::Nothing
         function ulw_i_j(i::Integer, j::Integer, theta::Real)::Real
             return ulw_fit_x_i_eval_x_j(
@@ -97,8 +99,9 @@ module KernelAbstractionsSmooth
             length(fit_y),
             get_fit_y_j,
             eval_y_hat, 
-            theta,
-            n_jobs
+            theta
+            ;
+            n_jobs = n_jobs
         )
         nothing
     end
