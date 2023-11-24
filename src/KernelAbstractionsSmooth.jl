@@ -11,10 +11,7 @@ module KernelAbstractionsSmooth
         eval_x_i::Real,
         theta::Real
     )
-        out = (eval_x_i - fit_x_j)^2
-        out /= theta
-        out *= -1
-        return(out)
+        return -0.5 * ((eval_x_i - fit_x_j) / theta) ^ 2 
     end
 
     function compute_eval_y_hat_i(
@@ -28,6 +25,7 @@ module KernelAbstractionsSmooth
         w_i = ulw_i_j.(i, 1:J, theta)
         eval_y_hat_i = 0.0
         lse = lsexp.log_sum_exp(w_i)
+        w_i .-= lse
         for j in 1:J
             eval_y_hat_i += get_fit_y_j(j) * exp(w_i[j] - lse)
         end

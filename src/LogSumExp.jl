@@ -22,14 +22,10 @@ module LogSumExp
         ka_lse!(x, x_max, group_results)
         return(sum(group_results))
     end
-        
+    
     function log_sum_exp(x::AbstractVector)::Real
         x_max = maximum(x)
-        out = zero(eltype(x))
-        for i in eachindex(x)
-            out += exp(x[i] - x_max)
-        end
-        out += x_max
-        return(out)
+        return x_max + log(sum(x_i -> exp(x_i - x_max), x))
     end
+    
 end
