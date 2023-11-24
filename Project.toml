@@ -1,6 +1,6 @@
 name = "KernelAbstractionsSmooth"
 uuid = "d022130c-3d6e-4958-b47b-f1b74eaf3f31"
-authors = ["Joonas Miettinen <joonas.m.miettinen@gmail.com> and contributors"]
+authors = ["Joonas Miettinen <joonas.m.miettinen@gmail.com>"]
 version = "0.1.0"
 
 [deps]

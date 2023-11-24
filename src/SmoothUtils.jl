@@ -1,5 +1,5 @@
 module SmoothUtils        
-    function get_ith_elem_from_first_dim(x::AbstractArray, i::Integer)
+    function get_ith_slice_from_first_dim(x::AbstractArray, i::Integer)
         n_dims = length(size(x))
         if n_dims == 1
             return(x[i])
@@ -8,9 +8,9 @@ module SmoothUtils
         return(x[indices...])
     end
 
-    function get_ith_elem_from_first_dim_factory(x::AbstractArray)
+    function get_ith_slice_from_first_dim_factory(x::AbstractArray)
         function fun(i::Integer)
-            su.get_ith_elem_from_first_dim(x, i)
+            su.get_ith_slice_from_first_dim(x, i)
         end
         return fun
     end
