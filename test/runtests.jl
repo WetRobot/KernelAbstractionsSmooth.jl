@@ -7,13 +7,14 @@ using Test
     y = 10.0:(-1.0):1.0
     y_hat = zeros(length(y)) .- 999
 
-    kas.smooth!(  
-        x, 
+    kas.ka_smooth!(  
+        kas.default_ulw_i_j_kernel,
+        x,
+        y,
+        x,
         y_hat, 
-        x, 
-        y, 
         1.0,
-        kas.default_ulp_callback
+        1
     )
     @show(y_hat)
     @test y_hat[1] < 10.5
